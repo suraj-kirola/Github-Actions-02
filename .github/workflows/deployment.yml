@@ -21,10 +21,21 @@ jobs:
   steps:
     - name: Get code
       uses: actions/checkout@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+          node-version: '18'
     - name: Install dependencies 
       run: npn ci 
     - name: Build website
       run: npn run build
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist-files
+        path: |
+          dist
+          package.json
  deploy:
   needs: build
   runs-on: ubuntu-latest
